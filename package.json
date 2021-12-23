@@ -20,5 +20,7 @@
     },
     "testModule": "tests/main.js"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "vuetify": "^2.6.1"
+  }
 }
