@@ -1,23 +1,23 @@
-// Tests for the behavior of the links collection
+// Tests for the behavior of the tasks collection
 //
 // https://guide.meteor.com/testing.html
 
 import { Meteor } from 'meteor/meteor';
 import { assert } from 'chai';
-import Links from './Links.js';
+import Tasks from './Tasks.js';
 
 if (Meteor.isServer) {
-  describe('links collection', function () {
+  describe('tasks collection', function () {
     it('insert correctly', function () {
-      const linkId = Links.insert({
-        title: 'meteor homepage',
-        url: 'https://www.meteor.com',
+      const taskId = Tasks.insert({
+        title: 'Task title',
+        closed: false,
       });
-      const added = Links.find({ _id: linkId });
+      const added = Tasks.find({ _id: taskId });
       const collectionName = added._getCollectionName();
       const count = added.count();
 
-      assert.equal(collectionName, 'links');
+      assert.equal(collectionName, 'tasks');
       assert.equal(count, 1);
     });
   });

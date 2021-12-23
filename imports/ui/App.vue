@@ -1,15 +1,25 @@
 <template>
-  <div>
-    <info />
-  </div>
+  <v-app>
+    <to-do-list :content="tasks" />
+  </v-app>
 </template>
 
 <script>
-import Info from './components/Info.vue'
+import ToDoList from './components/ToDoList.vue'
+import Tasks from './../api/collections/Tasks'
 
 export default {
   components: {
-    Info
+    ToDoList
+  },
+
+  meteor: {
+    $subscribe: {
+      'tasks': [],
+    },
+    tasks () {
+      return Tasks.find({})
+    }
   }
 }
 </script>
