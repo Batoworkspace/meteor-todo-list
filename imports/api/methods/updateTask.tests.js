@@ -4,15 +4,15 @@ import Tasks from '../collections/Tasks.js'
 import './methods.js'
 
 if (Meteor.isServer) {
-  describe('method: createTask', function () {
+  describe('method: updateTask', function () {
     beforeEach(function () {
       Tasks.remove({})
     })
 
-    it('can add a new task', function () {
-      const addTask = Meteor.server.method_handlers['createTask']
+    it('can update the task', function () {
+      const updTask = Meteor.server.method_handlers['updateTask']
 
-      addTask.apply({}, ['str', 'title', false, {}])
+      updTask.apply({}, ['str', false, {}])
 
       assert.equal(Tasks.find().count(), 1)
     })

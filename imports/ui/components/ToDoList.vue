@@ -6,12 +6,14 @@
                     <v-card-title>Bato ToDo List</v-card-title>
                     <v-card-text>
                         <v-container>
-                            <div v-if="!content || content.length === 0">Here is no any tasks added</div>
+                            <div v-if="!prepared || prepared.length === 0">Here is no any tasks added</div>
                             <content-item
                                 v-for="(item, index) in prepared"
-                                :key="index"
+                                :key="item.uniq"
                                 :content="item"
                                 :order="index + 1"
+                                @removeItem="remove"
+                                @updateItem="update"
                             />
                         </v-container>
                         <v-form valid="true" v-model="isFormValid">
@@ -48,7 +50,10 @@ export default {
     methods: {
         submit (event) {
             event.preventDefault()
-            Meteor.call('createTask', this.title, this.closed, (error) => {
+
+            const uniq = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+
+            Meteor.call('createTask', uniq, this.title, this.closed, (error) => {
                 if (error) {
                     console.log(error.error)
                 } else {
@@ -56,11 +61,23 @@ export default {
                     this.closed = false
                 }
             })
+        },
+
+        remove (uniq) {
+            Meteor.call('removeTask', uniq, (error) => {
+                if (error) {
+                    console.log(error.error)
+                }
+            })
+        },
+
+        update (uniq, closed) {
+            Meteor.call('updateTask', uniq, closed, (error) => {
+                if (error) {
+                    console.log(error.error)
+                }
+            })
         }
     }
 }
 </script>
-
-<style scoped>
-
-</style>

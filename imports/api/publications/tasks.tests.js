@@ -7,7 +7,8 @@ describe('Publish tasks', function () {
   beforeEach(function () {
     Tasks.remove({})
     Tasks.insert({
-      title: 'Task title',
+      uniq: 'str',
+      title: 'title',
       closed: false
     })
   })
