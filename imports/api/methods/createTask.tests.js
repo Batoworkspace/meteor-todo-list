@@ -12,7 +12,7 @@ if (Meteor.isServer) {
     it('can add a new task', function () {
       const addTask = Meteor.server.method_handlers['createTask']
 
-      addTask.apply({}, ['str', 'title', false, {}])
+      addTask.apply({}, ['id','str', 'title', false, {}])
 
       assert.equal(Tasks.find().count(), 1)
     })

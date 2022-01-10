@@ -4,17 +4,19 @@
             <v-card tile flat>
                 <v-card-title>Bato ToDo List</v-card-title>
                 <v-card-text>
-                    <v-container>
-                        <div v-if="!prepared || prepared.length === 0">Here is no any tasks added</div>
-                        <content-item
-                            v-for="(item, index) in prepared"
-                            :key="item.uniq"
-                            :content="item"
-                            :order="index + 1"
-                            @removeItem="remove"
-                            @updateItem="update"
-                        />
-                    </v-container>
+                    <v-row v-if="!prepared || prepared.length === 0">
+                        <v-col>
+                            Here is no any tasks added
+                        </v-col>
+                    </v-row>
+                    <content-item
+                        v-for="(item, index) in prepared"
+                        :key="item.uniq"
+                        :content="item"
+                        :order="index + 1"
+                        @removeItem="remove"
+                        @updateItem="update"
+                    />
                     <v-form valid="true" v-model="isFormValid">
                         <v-text-field v-model="title" label="Add new item" :rules="[v => !!v && v.length > 3]" />
                         <v-btn :disabled="!isFormValid" type="submit" @click="submit($event)">Submit</v-btn>
@@ -40,6 +42,13 @@ export default {
             closed: false
         }
     },
+    meteor: {
+        owner () {
+            if (Meteor.user() !== null) {
+                return Meteor.userId()
+            }
+        }
+    },
     computed: {
         prepared () {
             return this.content || []
@@ -51,7 +60,7 @@ export default {
 
             const uniq = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 
-            Meteor.call('createTask', uniq, this.title, this.closed, (error) => {
+            Meteor.call('createTask', this.owner, uniq, this.title, this.closed, (error) => {
                 if (error) {
                     console.log(error.error)
                 } else {
@@ -62,7 +71,7 @@ export default {
         },
 
         remove (uniq) {
-            Meteor.call('removeTask', uniq, (error) => {
+            Meteor.call('removeTask', this.owner, uniq, (error) => {
                 if (error) {
                     console.log(error.error)
                 }
@@ -70,7 +79,7 @@ export default {
         },
 
         update (uniq, closed) {
-            Meteor.call('updateTask', uniq, closed, (error) => {
+            Meteor.call('updateTask', this.owner, uniq, closed, (error) => {
                 if (error) {
                     console.log(error.error)
                 }

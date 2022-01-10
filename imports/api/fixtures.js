@@ -1,3 +1,5 @@
+// Fill in the DB by data
+
 import { Meteor } from 'meteor/meteor'
 import Tasks from './collections/Tasks.js'
 

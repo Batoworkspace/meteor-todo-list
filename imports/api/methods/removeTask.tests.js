@@ -12,7 +12,7 @@ if (Meteor.isServer) {
     it('can remove the task', function () {
       const remTask = Meteor.server.method_handlers['removeTask']
 
-      remTask.apply({}, ['str', {}])
+      remTask.apply({}, ['id' ,'str', {}])
 
       assert.equal(Tasks.find().count(), 1)
     })

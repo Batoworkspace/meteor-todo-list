@@ -12,7 +12,7 @@ if (Meteor.isServer) {
     it('can update the task', function () {
       const updTask = Meteor.server.method_handlers['updateTask']
 
-      updTask.apply({}, ['str', false, {}])
+      updTask.apply({}, ['id', 'str', false, {}])
 
       assert.equal(Tasks.find().count(), 1)
     })

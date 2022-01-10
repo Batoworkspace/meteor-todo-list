@@ -3,11 +3,12 @@ import { check } from 'meteor/check'
 import Tasks from '../collections/Tasks.js'
 
 Meteor.methods({
-  'updateTask' (uniq, closed) {
+  'updateTask' (owner, uniq, closed) {
+    check(owner, String)
     check(uniq, String)
     check(closed, Boolean)
 
-    const record = Tasks.find({uniq: uniq}).fetch()
+    const record = Tasks.find({owner: owner, uniq: uniq}).fetch()
     const recordId = record[0]._id
 
     let closedStatus = false

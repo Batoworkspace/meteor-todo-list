@@ -1,6 +1,11 @@
 <template>
     <v-container>
-        <to-do-list :content="tasks" />
+        <v-row>
+            <v-col>
+                <router-link to="/profile">Your Profile</router-link>
+            </v-col>
+        </v-row>
+        <to-do-list v-if="isLoggedIn" :content="tasks" />
     </v-container>
 </template>
 
@@ -14,11 +19,24 @@ export default {
     },
 
     meteor: {
+        isLoggedIn () {
+            return Meteor.user() !== null
+        },
         $subscribe: {
             'tasks': [],
         },
         tasks () {
-            return Tasks.find({})
+            if (Meteor.user() !== null) {
+                return Tasks.find({ owner: Meteor.userId() })
+            }
+        }
+    },
+
+    mounted () {
+        if (!this.isLoggedIn) {
+            alert('You are currently logged out')
+
+            this.$router.push('/')
         }
     }
 }
