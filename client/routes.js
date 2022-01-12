@@ -20,6 +20,11 @@ const routes = [
         component: () => import('../imports/ui/pages/Profile.vue')
     },
     {
+        path: '/admin',
+        name: 'admin',
+        component: () => import('../imports/ui/pages/Admin.vue')
+    },
+    {
         path: '*',
         name: 'not-found',
         component: () => import('../imports/ui/pages/NotFound.vue'),

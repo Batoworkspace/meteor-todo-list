@@ -2,7 +2,7 @@
     <v-row>
         <v-col>
             <v-card tile flat>
-                <v-card-title>Bato ToDo List</v-card-title>
+                <v-card-title>{{ username }}'s ToDo List</v-card-title>
                 <v-card-text>
                     <v-row v-if="!prepared || prepared.length === 0">
                         <v-col>
@@ -31,7 +31,7 @@
 import ContentItem from './ContentItem.vue'
 
 export default {
-    props: ['content'],
+    props: ['content', 'username'],
     components: {
         ContentItem
     },

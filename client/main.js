@@ -10,6 +10,9 @@ import 'vuetify/dist/vuetify.min.css'
 
 Vue.use(Vuetify)
 
+Meteor.subscribe('userList')
+Meteor.subscribe('tasks')
+
 Meteor.startup(() => {
   const vuetify = new Vuetify()
 
